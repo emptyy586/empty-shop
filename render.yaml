@@ -37,8 +37,8 @@ services:
     name: empty-shop-admin
     runtime: static
     rootDir: client-admin
-    buildCommand: npm install && npm run build
-    staticPublishPath: build
+    buildCommand: npm install && npm run build && mkdir -p dist/admin && cp -r build/. dist/admin/
+    staticPublishPath: dist
     envVars:
       - key: CI
         value: "false"
@@ -48,5 +48,5 @@ services:
         destination: https://empty-shop-api-on6v.onrender.com/api/*
       - type: rewrite
         source: /*
-        destination: /index.html
+        destination: /admin/index.html
 
