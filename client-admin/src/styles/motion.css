@@ -1,0 +1,83 @@
+:root {
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.body-admin.is-route-changing > .admin-page,
+.body-admin.is-route-changing > .admin-panels { animation: route-change var(--dur-base) var(--ease-out) both; }
+button, a, input, select, textarea, [role='button'] { cursor: pointer; }
+input, select, textarea { cursor: text; }
+button:disabled, input:disabled, select:disabled, textarea:disabled { cursor: not-allowed; }
+.btn, .iconbtn, .admin-sidebar nav a {
+  transition: color var(--dur-fast) ease, background-color var(--dur-fast) ease,
+    border-color var(--dur-fast) ease, opacity var(--dur-fast) ease,
+    transform var(--dur-fast) var(--ease-out);
+}
+.btn:hover:not(:disabled), .iconbtn:hover:not(:disabled) { transform: translateY(-2px); }
+.btn:active:not(:disabled), .iconbtn:active:not(:disabled) { transform: scale(.97); }
+.btn[aria-busy='true'] { min-width: 132px; }
+.btn[aria-busy='true']::before {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  content: '';
+  animation: es-spin .7s linear infinite;
+}
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--acc2);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--acc) 24%, transparent);
+}
+.body-admin .table-bordered tbody tr { transition: background-color var(--dur-fast) ease; }
+.body-admin .status-badge { transition: transform var(--dur-fast) var(--ease-spring), opacity var(--dur-fast) ease; }
+.body-admin .status-badge:hover { transform: translateY(-1px); }
+.admin-sidebar nav a { position: relative; }
+.admin-sidebar nav { position: relative; }
+.admin-nav-indicator { position: absolute; z-index: 0; top: 0; left: 0; border: 1px solid var(--brd); border-radius: 16px; background: var(--chip); opacity: 0; pointer-events: none; transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-fast) ease; }
+.admin-sidebar nav a { z-index: 1; background: transparent !important; }
+.admin-sidebar nav a.active { color: var(--fg); }
+.admin-sidebar nav a:hover:not(.active) { background: var(--chip) !important; color: var(--fg); }
+.admin-panel.admin-detail.is-selected { animation: panel-slide-in var(--dur-base) var(--ease-out) both; }
+.stat-card strong { display: block; font-variant-numeric: tabular-nums; }
+.price-preview { color: var(--acc2); font-size: 12px; }
+.body-admin > .admin-page, .body-admin > .admin-panels { animation: none; }
+.theme-toggle { position: relative; overflow: hidden; }
+.theme-toggle .theme-icon { position: absolute; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transform: rotate(-35deg) scale(.8); transition: opacity 300ms ease, transform 300ms var(--ease-out); }
+.theme-toggle .theme-icon.is-active { opacity: 1; transform: rotate(0) scale(1); }
+.theme-toggle.is-transitioning { pointer-events: none; }
+html.theme-fading *, html.theme-fading *::before, html.theme-fading *::after {
+  transition: background-color 600ms ease, color 600ms ease, border-color 600ms ease,
+    box-shadow 600ms ease, fill 600ms ease, stroke 600ms ease !important;
+}
+::view-transition-group(root) { animation-duration: 650ms; }
+::view-transition-old(root), ::view-transition-new(root) { mix-blend-mode: normal; animation-duration: 650ms; animation-timing-function: ease-in-out; }
+::view-transition-old(root) { animation-name: theme-fade-out; }
+::view-transition-new(root) { animation-name: theme-fade-in; }
+.toast { animation: toast-slide-in var(--dur-base) var(--ease-out); }
+.confirm-backdrop { animation: state-arrive var(--dur-fast) ease both; }
+.confirm-dialog { animation: dialog-arrive var(--dur-base) var(--ease-out) both; }
+.field-error { animation: field-shake 240ms ease both; }
+@keyframes route-change { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes state-arrive { from { opacity: 0; } to { opacity: 1; } }
+@keyframes toast-slide-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes dialog-arrive { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+@keyframes field-shake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+@keyframes panel-slide-in { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes theme-fade-out { to { opacity: 0; } }
+@keyframes theme-fade-in { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
