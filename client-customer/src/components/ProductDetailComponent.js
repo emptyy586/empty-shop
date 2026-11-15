@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import axios from 'axios';
+import '../styles/home-v2.css';
 import { Link } from 'react-router-dom';
 import withRouter from '../utils/withRouter';
 import getImageSrc from '../utils/getImageSrc';
@@ -68,7 +69,7 @@ class ProductDetail extends Component {
     try {
       const [productRes, hotRes] = await Promise.all([
         axios.get('/api/customer/products/' + this.props.params.id),
-        axios.get('/api/customer/products/hot', { params: { limit: 22 } }),
+        axios.get('/api/customer/products/hot', { params: { limit: 12 } }),
       ]);
       const product = productRes.data;
       const hotList = Array.isArray(hotRes.data) ? hotRes.data : [];
@@ -151,14 +152,14 @@ class ProductDetail extends Component {
   render() {
     const { product, txtQuantity, loading, error, activeTab, relatedProds, soldCount, wishlisted, imageZoom } = this.state;
 
-    if (loading) return <main className="customer-content"><ProductDetailSkeleton /></main>;
-    if (error)   return <main className="customer-content"><ErrorState message={error} onRetry={() => this.apiGetProduct()} /></main>;
-    if (!product) return <main className="customer-content"><ErrorState message="Không tìm thấy sản phẩm." onRetry={() => this.apiGetProduct()} /></main>;
+    if (loading) return <main className="customer-content hv2 hv2-detail"><ProductDetailSkeleton /></main>;
+    if (error)   return <main className="customer-content hv2 hv2-detail"><ErrorState message={error} onRetry={() => this.apiGetProduct()} /></main>;
+    if (!product) return <main className="customer-content hv2 hv2-detail"><ErrorState message="Không tìm thấy sản phẩm." onRetry={() => this.apiGetProduct()} /></main>;
 
     const tabs = ['warranty', 'return', 'shipping', ...(product.specs?.length ? ['specs'] : [])];
 
     return (
-      <main className="customer-content">
+      <main className="customer-content hv2 hv2-detail">
 
         {/* Breadcrumb */}
         <nav className="product-breadcrumb" aria-label="Điều hướng">

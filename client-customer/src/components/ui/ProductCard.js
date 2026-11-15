@@ -93,23 +93,25 @@ function ProductCard({ product, index = 0, rank, sold, featured = false, animate
         </button>
       </div>
 
-      <span className="product-card-category">
-        Apple&nbsp;·&nbsp;{product.category?.name || 'Sản phẩm'}
-      </span>
-      <Link className="product-card-name" to={`/product/${product._id}`}>{product.name || ''}</Link>
-      {sold !== undefined && <span className="product-sold">Đã bán {soldCount}</span>}
-      <div className="product-card-footer">
-        <span className="product-price">{formatMoney(product.price)}</span>
-        <button
-          type="button"
-          className={`iconbtn quick-add${added ? ' is-added' : ''}`}
-          aria-label={added ? `Đã thêm ${product.name || 'sản phẩm'} vào giỏ` : `Thêm ${product.name || 'sản phẩm'} vào giỏ`}
-          onClick={addToCart}
-        >
-          {added
-            ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
-            : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>}
-        </button>
+      <div className="product-card-info">
+        <span className="product-card-category">
+          Apple&nbsp;·&nbsp;{product.category?.name || 'Sản phẩm'}
+        </span>
+        <Link className="product-card-name" to={`/product/${product._id}`}>{product.name || ''}</Link>
+        {sold !== undefined && <span className="product-sold">Đã bán {soldCount}</span>}
+        <div className="product-card-footer">
+          <span className="product-price">{formatMoney(product.price)}</span>
+          <button
+            type="button"
+            className={`iconbtn quick-add${added ? ' is-added' : ''}`}
+            aria-label={added ? `Đã thêm ${product.name || 'sản phẩm'} vào giỏ` : `Thêm ${product.name || 'sản phẩm'} vào giỏ`}
+            onClick={addToCart}
+          >
+            {added
+              ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>
+              : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>}
+          </button>
+        </div>
       </div>
     </article>
   );

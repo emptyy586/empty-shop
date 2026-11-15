@@ -9,6 +9,7 @@ import formatMoney from '../utils/formatMoney';
 import apiErrorMessage from '../utils/apiErrorMessage';
 import ProductCard from './ui/ProductCard';
 import ProductGridSkeleton from './ui/ProductGridSkeleton';
+import '../styles/home-v2.css';
 
 class Home extends Component {
   constructor(props) {
@@ -72,11 +73,11 @@ class Home extends Component {
     const featured = newprods[0];
     const gridProds = newprods.slice(1);
 
-    if (loading) return <main className="customer-content"><ProductGridSkeleton count={4} /></main>;
-    if (error)   return <main className="customer-content"><ErrorState message={error} onRetry={() => this.apiGetProducts()} /></main>;
+    if (loading) return <main className="customer-content hv2"><ProductGridSkeleton count={4} /></main>;
+    if (error)   return <main className="customer-content hv2"><ErrorState message={error} onRetry={() => this.apiGetProducts()} /></main>;
 
     return (
-      <main className="customer-content">
+      <main className="customer-content hv2">
 
         {/* ── Hero ─────────────────────────────────────────────── */}
         {featured && (
