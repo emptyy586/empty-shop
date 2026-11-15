@@ -52,13 +52,8 @@ router.post('/signup', async (req, res) => {
     return res.status(400).json({ success: false, message: 'Password must be at least 6 characters' });
   }
 
-  const autoActivate = process.env.NODE_ENV !== 'production' && MyConstants.DEV_AUTO_ACTIVATE;
-  if (!EmailUtil.isConfigured() && process.env.NODE_ENV === 'production') {
-    return res.status(503).json({
-      success: false,
-      message: 'Activation email is not configured in production',
-    });
-  }
+  // Bỏ qua email nếu chưa cấu hình hoặc SKIP_EMAIL_ACTIVATION=true
+  const skipEmail = process.env.SKIP_EMAIL_ACTIVATION === 'true' || !EmailUtil.isConfigured();
 
   try {
     const [existingUsername, existingEmail] = await Promise.all([
@@ -85,7 +80,7 @@ router.post('/signup', async (req, res) => {
       name,
       phone: phone || '',
       email,
-      active: autoActivate ? 1 : 0,
+      active: skipEmail ? 1 : 0,
       token,
     };
     let result;
@@ -108,12 +103,8 @@ router.post('/signup', async (req, res) => {
       return res.status(500).json({ success: false, message: 'Could not create customer record' });
     }
 
-    if (autoActivate) {
-      return res.json({ success: true, message: 'Account activated for development' });
-    }
-    if (!EmailUtil.isConfigured()) {
-      console.log('[signup] Activation URL:', EmailUtil.activationUrl(result._id, token));
-      return res.json({ success: true, message: 'Please check the server console for the activation link' });
+    if (skipEmail) {
+      return res.json({ success: true, activated: true, message: 'Account created and activated' });
     }
 
     try {

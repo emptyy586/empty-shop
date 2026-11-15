@@ -18,6 +18,7 @@ class Signup extends Component {
     loading: false,
     success: false,
     successMessage: '',
+    autoActivated: false,
     errors: {},
   };
 
@@ -73,12 +74,16 @@ class Signup extends Component {
         email: txtEmail.trim(),
       });
       if (result.data?.success === true) {
-        const message = /console/i.test(result.data.message || '')
-          ? 'Tài khoản đã được tạo. Hãy lấy liên kết kích hoạt trong console của server đang chạy.'
-          : /activated for development/i.test(result.data.message || '')
-            ? 'Tài khoản đã được kích hoạt trong môi trường phát triển. Bạn có thể đăng nhập.'
-            : 'Vui lòng kiểm tra email để kích hoạt tài khoản trước khi đăng nhập.';
-        this.setState({ success: true, successMessage: message, loading: false });
+        let message, autoActivated = false;
+        if (result.data?.activated) {
+          message = 'Đăng ký thành công, bạn có thể đăng nhập.';
+          autoActivated = true;
+        } else if (/console/i.test(result.data.message || '')) {
+          message = 'Tài khoản đã được tạo. Hãy lấy liên kết kích hoạt trong console của server đang chạy.';
+        } else {
+          message = 'Vui lòng kiểm tra email để kích hoạt tài khoản trước khi đăng nhập.';
+        }
+        this.setState({ success: true, successMessage: message, autoActivated, loading: false });
       } else {
         this.showSignupError(result.data?.message || '');
       }
@@ -193,7 +198,7 @@ class Signup extends Component {
   }
 
   render() {
-    const { loading, success, successMessage, errors } = this.state;
+    const { loading, success, successMessage, autoActivated, errors } = this.state;
 
     if (success) {
       return (
@@ -205,9 +210,9 @@ class Signup extends Component {
             <button
               type="button"
               className="btn btn-primary auth-submit"
-              onClick={() => this.props.navigate('/active')}
+              onClick={() => this.props.navigate(autoActivated ? '/login' : '/active')}
             >
-              Đến trang kích hoạt
+              {autoActivated ? 'Đăng nhập ngay' : 'Đến trang kích hoạt'}
             </button>
           </section>
         </main>
