@@ -423,6 +423,14 @@
 .av2 .admin-form input[readonly] { background: #f9f5f6 !important; }
 .av2 .price-preview { color: var(--av2-mu); font-size: 12px; }
 
+/* ── Order shipping info ──────────────────────────────────────────────────── */
+.av2-shipping-block { margin: 12px 0 16px; padding: 12px 16px; background: #f9f4f6; border-radius: 12px; font-size: 13px; }
+.av2 .av2-shipping-block { background: rgba(255,255,255,.06); }
+.av2-shipping-block strong { display: block; margin-bottom: 8px; color: var(--av2-fg, #1a0a10); font-weight: 700; font-size: 14px; }
+.av2-shipping-dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 0; }
+.av2-shipping-dl dt { color: var(--av2-mu, #6b5b61); font-weight: 600; white-space: nowrap; }
+.av2-shipping-dl dd { margin: 0; color: var(--av2-fg, #1a0a10); word-break: break-word; }
+
 /* ── Specs editor ────────────────────────────────────────────────────────── */
 .av2-specs-editor {
   display: flex;

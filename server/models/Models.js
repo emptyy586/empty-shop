@@ -55,6 +55,16 @@ const ItemSchema = new mongoose.Schema(
   { _id: false, versionKey: false }
 );
 
+const ShippingInfoSchema = new mongoose.Schema(
+  {
+    name:    String,
+    phone:   String,
+    address: String,
+    note:    String,
+  },
+  { _id: false, versionKey: false }
+);
+
 const OrderSchema = new mongoose.Schema(
   {
     cdate: Number,
@@ -62,6 +72,7 @@ const OrderSchema = new mongoose.Schema(
     status: String,
     customer: OrderCustomerSnapshotSchema,
     items: [ItemSchema],
+    shippingInfo: { type: ShippingInfoSchema, default: undefined },
   },
   { versionKey: false }
 );

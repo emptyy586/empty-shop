@@ -277,6 +277,12 @@ select option { background: var(--surface); color: var(--fg); }
 .quantity-control .btn { min-width: 36px; min-height: 36px; margin: 0 !important; padding: 5px 10px; }
 .order-detail-title { margin: 28px 0 10px !important; }
 .order-detail-summary { color: var(--muted); text-align: center; font-size: 13px; }
+.order-shipping-info { margin: 12px 0 16px; padding: 14px 18px; border-radius: 14px; font-size: 13px; }
+.order-shipping-info strong { display: block; margin-bottom: 8px; color: var(--fg); font-size: 14px; }
+.shipping-dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 12px; margin: 0; }
+.shipping-dl dt { color: var(--muted); font-weight: 600; white-space: nowrap; }
+.shipping-dl dd { margin: 0; color: var(--fg); word-break: break-word; }
+.shipping-empty { margin: 0; color: var(--muted); }
 .field-error { display: block; margin: 5px 0 8px; color: #FF9AAE; font-size: 12px; }
 :root[data-theme='light'] .field-error { color: #9F1834; }
 .search-summary { margin: 0 0 22px; color: var(--muted); text-align: center; font-size: 14px; }
@@ -286,6 +292,20 @@ select option { background: var(--surface); color: var(--fg); }
 .datatable th, .body-admin .table-bordered th { color: var(--acc2); font-size: 11px; font-weight: 700; }
 .datatable tr:last-child td, .body-admin .table-bordered tr:last-child td { border-bottom: 0; }
 .datatable img { width: 70px; height: 70px; border-radius: 12px; object-fit: contain; }
+/* Checkout shipping form modal */
+.checkout-modal { width: min(100%, 520px); padding: 28px 32px; border-radius: 28px; }
+.checkout-modal h3 { margin: 0 0 4px; color: var(--fg); font-size: 20px; }
+.checkout-modal-total { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
+.checkout-modal-total strong { color: var(--acc2); }
+.checkout-field { display: flex; flex-direction: column; margin-bottom: 2px; }
+.checkout-field label { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 5px; }
+.checkout-field label span { color: var(--acc); }
+.checkout-field input { width: 100%; }
+.checkout-server-error { margin-top: 4px; }
+@media (max-width: 540px) {
+  .checkout-modal { padding: 20px 16px; border-radius: 20px; }
+}
+
 .table-scroll + button, .checkout-success-actions { margin-top: 18px; }
 .checkout-success { max-width: 760px; margin: 8vh auto; padding: clamp(26px, 5vw, 56px); border-radius: var(--radius-panel); text-align: center; }
 .checkout-success h1 { font-size: clamp(28px, 5vw, 48px); }

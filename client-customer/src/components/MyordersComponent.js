@@ -121,6 +121,24 @@ class Myorders extends Component {
               Mã đơn: <strong>{selectedOrder._id}</strong>
               {' — '}Trạng thái: <StatusBadge status={selectedOrder.status} />
             </p>
+
+            {/* Thông tin giao hàng */}
+            <div className="order-shipping-info glass">
+              <strong>Thông tin giao hàng</strong>
+              {selectedOrder.shippingInfo ? (
+                <dl className="shipping-dl">
+                  <dt>Người nhận</dt><dd>{selectedOrder.shippingInfo.name}</dd>
+                  <dt>Điện thoại</dt><dd>{selectedOrder.shippingInfo.phone}</dd>
+                  <dt>Địa chỉ</dt><dd>{selectedOrder.shippingInfo.address}</dd>
+                  {selectedOrder.shippingInfo.note && (
+                    <><dt>Ghi chú</dt><dd>{selectedOrder.shippingInfo.note}</dd></>
+                  )}
+                </dl>
+              ) : (
+                <p className="shipping-empty">—</p>
+              )}
+            </div>
+
             <div className="table-scroll"><table className="datatable">
               <thead>
                 <tr>

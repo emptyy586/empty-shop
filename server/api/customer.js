@@ -201,14 +201,43 @@ router.put('/customers/:id', JwtUtil.checkToken, async (req, res) => {
   }
 });
 
+// +84XXXXXXXXX → 0XXXXXXXXX; bỏ khoảng trắng, dấu gạch, dấu chấm
+const normalizePhone = (raw = '') => {
+  let p = String(raw).replace(/[\s\-.]/g, '');
+  if (p.startsWith('+84')) p = '0' + p.slice(3);
+  return p;
+};
+
 router.post('/checkout', JwtUtil.checkToken, async (req, res) => {
   try {
+    const si = req.body.shippingInfo || {};
+    const shipName    = typeof si.name    === 'string' ? si.name.trim()    : '';
+    const shipPhone   = normalizePhone(si.phone);
+    const shipAddress = typeof si.address === 'string' ? si.address.trim() : '';
+    const shipNote    = typeof si.note    === 'string' ? si.note.trim()    : '';
+
+    if (!shipName)
+      return res.status(400).json({ success: false, message: 'Vui lòng nhập họ tên người nhận.' });
+    if (shipName.length > 100)
+      return res.status(400).json({ success: false, message: 'Họ tên người nhận tối đa 100 ký tự.' });
+    if (!shipPhone)
+      return res.status(400).json({ success: false, message: 'Vui lòng nhập số điện thoại.' });
+    if (!/^\d{9,11}$/.test(shipPhone))
+      return res.status(400).json({ success: false, message: 'Số điện thoại không hợp lệ (9–11 chữ số, có thể bắt đầu bằng +84).' });
+    if (!shipAddress)
+      return res.status(400).json({ success: false, message: 'Vui lòng nhập địa chỉ giao hàng.' });
+    if (shipAddress.length > 255)
+      return res.status(400).json({ success: false, message: 'Địa chỉ giao hàng tối đa 255 ký tự.' });
+    if (shipNote.length > 500)
+      return res.status(400).json({ success: false, message: 'Ghi chú tối đa 500 ký tự.' });
+
     const order = {
       cdate: Date.now(),
       total: req.body.total,
       status: 'PENDING',
       customer: req.body.customer,
       items: req.body.items,
+      shippingInfo: { name: shipName, phone: shipPhone, address: shipAddress, note: shipNote },
     };
     const result = await OrderDAO.insert(order);
     return res.json(result);

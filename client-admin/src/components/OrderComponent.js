@@ -110,6 +110,24 @@ class OrderComponent extends Component {
             <button type="button" className="btn btn-glass" onClick={() => this.setState({ order: null })}>Đóng</button>
           </div>
           <p>Trạng thái: <span className={`status-badge status-${(order.status || '').toLowerCase()}`}>{STATUS_TEXT[order.status] || order.status}</span></p>
+
+          {/* Thông tin giao hàng */}
+          <div className="av2-shipping-block">
+            <strong>Thông tin giao hàng</strong>
+            {order.shippingInfo ? (
+              <dl className="av2-shipping-dl">
+                <dt>Người nhận</dt><dd>{order.shippingInfo.name}</dd>
+                <dt>Điện thoại</dt><dd>{order.shippingInfo.phone}</dd>
+                <dt>Địa chỉ</dt><dd>{order.shippingInfo.address}</dd>
+                {order.shippingInfo.note && (
+                  <><dt>Ghi chú</dt><dd>{order.shippingInfo.note}</dd></>
+                )}
+              </dl>
+            ) : (
+              <span style={{ color: 'var(--av2-mu, #6b5b61)' }}>—</span>
+            )}
+          </div>
+
           <div className="table-scroll"><table className="table-bordered"><thead><tr><th>#</th><th>Sản phẩm</th><th>Ảnh</th><th>Đơn giá</th><th>Số lượng</th><th>Thành tiền</th></tr></thead>
             <tbody>{(order.items || []).map((item, index) => {
               const product = item?.product;
