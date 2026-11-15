@@ -15,6 +15,7 @@ import ProductsPage from './ProductsPageComponent';
 import Bestsellers from './BestsellersComponent';
 import RouteTransition from './ui/RouteTransition';
 import AuthLayout from './ui/AuthLayout';
+import Footer from './FooterComponent';
 
 function Main() {
   const { pathname } = useLocation();
@@ -39,6 +40,7 @@ function Main() {
         <Route path="/myorders" element={<Myorders />} />
         <Route path="*" element={<NotFound />} />
       </Routes></RouteTransition>
+      {!isAuthRoute && <Footer />}
       <Toast />
     </div>
   );

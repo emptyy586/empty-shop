@@ -15,6 +15,11 @@ function ProductCard({ product, index = 0, rank, sold, featured = false, animate
   const soldCount = useCountUp(sold, cardRef);
   const [added, setAdded] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [wishlisted, setWishlisted] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('wishlist') || '[]').includes(String(product._id));
+    } catch { return false; }
+  });
   usePointerLight(cardRef);
 
   useEffect(() => () => {
@@ -35,6 +40,19 @@ function ProductCard({ product, index = 0, rank, sold, featured = false, animate
     resetRef.current = window.setTimeout(() => setAdded(false), 1000);
   };
 
+  const toggleWishlist = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      const list = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      const updated = wishlisted
+        ? list.filter((id) => id !== String(product._id))
+        : [...list, String(product._id)];
+      localStorage.setItem('wishlist', JSON.stringify(updated));
+    } catch {}
+    setWishlisted((w) => !w);
+  };
+
   return (
     <article
       ref={cardRef}
@@ -48,20 +66,36 @@ function ProductCard({ product, index = 0, rank, sold, featured = false, animate
       }}
     >
       {rank && <span className={`product-rank rank-${rank}`}>Hạng {rank}</span>}
-      <Link className={`product-card-image${imageLoaded ? ' image-loaded' : ''}`} to={`/product/${product._id}`}>
-        {product.image && (
-          <img
-            loading="lazy"
-            src={getImageSrc(product.image)}
-            alt={product.name || ''}
-            width="300"
-            height="300"
-            onLoad={() => setImageLoaded(true)}
-            onError={() => setImageLoaded(true)}
-          />
-        )}
-      </Link>
-      <span className="product-card-category">{product.category?.name || 'Sản phẩm'}</span>
+
+      <div className="product-card-visual">
+        <Link className={`product-card-image${imageLoaded ? ' image-loaded' : ''}`} to={`/product/${product._id}`}>
+          {product.image && (
+            <img
+              loading="lazy"
+              src={getImageSrc(product.image)}
+              alt={product.name || ''}
+              width="300"
+              height="300"
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageLoaded(true)}
+            />
+          )}
+        </Link>
+        <button
+          type="button"
+          className={`wishlist-btn${wishlisted ? ' is-wishlisted' : ''}`}
+          aria-label={wishlisted ? `Bỏ yêu thích ${product.name || ''}` : `Yêu thích ${product.name || ''}`}
+          onClick={toggleWishlist}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+          </svg>
+        </button>
+      </div>
+
+      <span className="product-card-category">
+        Apple&nbsp;·&nbsp;{product.category?.name || 'Sản phẩm'}
+      </span>
       <Link className="product-card-name" to={`/product/${product._id}`}>{product.name || ''}</Link>
       <div className="product-card-footer">
         <div>
