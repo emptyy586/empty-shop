@@ -7,10 +7,10 @@ const insert = (order) => {
 };
 
 const selectByCustID = (_cid) =>
-  Order.find({ 'customer._id': _cid }).exec();
+  Order.find({ 'customer._id': _cid }).lean().exec();
 
 const selectAll = () =>
-  Order.find({}).sort({ cdate: -1 });
+  Order.find({}).sort({ cdate: -1 }).lean();
 
 const update = (_id, newStatus) =>
   Order.findByIdAndUpdate(_id, { status: newStatus }, { new: true });
