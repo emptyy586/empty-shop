@@ -117,6 +117,7 @@ const SPECS_DATA = {
   '6288bd295ddf350614f2a916': { // iPad Pro — M4 11" (2024)
     name: 'iPad Pro 11" M4 (2024)',
     specs: [
+      { label: 'Phiên bản',     value: 'iPad Pro 11" M4 (2024)' },
       { label: 'Màn hình',      value: '11" Ultra Retina XDR OLED, 2420 × 1668 px, 268 ppi, 1000 nit' },
       { label: 'Chip',          value: 'Apple M4 (9 nhân CPU, 10 nhân GPU)' },
       { label: 'RAM',           value: '8 GB (256/512 GB) hoặc 16 GB (1/2 TB)' },
@@ -131,6 +132,7 @@ const SPECS_DATA = {
   '6288bc0940a1d1225e22805d': { // iPad Mini — Mini 6 (2021)
     name: 'iPad mini 6 (2021)',
     specs: [
+      { label: 'Phiên bản',     value: 'iPad mini 6 (2021)' },
       { label: 'Màn hình',      value: '8,3" Liquid Retina IPS, 2266 × 1488 px, 326 ppi' },
       { label: 'Chip',          value: 'Apple A15 Bionic (6 nhân)' },
       { label: 'RAM',           value: '4 GB' },
@@ -145,6 +147,7 @@ const SPECS_DATA = {
   '6288bb8505f9bb7c9f45cc18': { // iPad Air — Air 5 M1 (2022)
     name: 'iPad Air 5 M1 (2022)',
     specs: [
+      { label: 'Phiên bản',     value: 'iPad Air 5 M1 (2022)' },
       { label: 'Màn hình',      value: '10,9" Liquid Retina IPS, 2360 × 1640 px, 264 ppi' },
       { label: 'Chip',          value: 'Apple M1 (8 nhân)' },
       { label: 'RAM',           value: '8 GB' },
@@ -160,6 +163,7 @@ const SPECS_DATA = {
   '6288be983afd8004d22ad851': { // Macbook 12
     name: 'MacBook 12" (2017)',
     specs: [
+      { label: 'Phiên bản',     value: 'MacBook 12" Intel Core (2017)' },
       { label: 'Màn hình',      value: '12" Retina IPS, 2304 × 1440 px, 226 ppi' },
       { label: 'Chip',          value: 'Intel Core m3 / i5 / i7 (thế hệ 7, 2 nhân)' },
       { label: 'RAM',           value: '8 GB hoặc 16 GB LPDDR3' },
@@ -174,6 +178,7 @@ const SPECS_DATA = {
   '6288beb73afd8004d22ad85b': { // Macbook Pro — 14" M4 (2024)
     name: 'MacBook Pro 14" M4 (2024)',
     specs: [
+      { label: 'Phiên bản',     value: 'MacBook Pro 14" M4 (2024)' },
       { label: 'Màn hình',      value: '14,2" Liquid Retina XDR, 3024 × 1964 px, 254 ppi, ProMotion 120Hz' },
       { label: 'Chip',          value: 'Apple M4 (10 nhân CPU: 4P+6E, 10 nhân GPU)' },
       { label: 'RAM',           value: '24 GB hoặc 32 GB' },
@@ -188,6 +193,7 @@ const SPECS_DATA = {
   '6288bea63afd8004d22ad856': { // Macbook Air — M2 (2022)
     name: 'MacBook Air M2 (2022)',
     specs: [
+      { label: 'Phiên bản',     value: 'MacBook Air M2 13,6" (2022)' },
       { label: 'Màn hình',      value: '13,6" Liquid Retina IPS, 2560 × 1664 px, 224 ppi' },
       { label: 'Chip',          value: 'Apple M2 (8 nhân CPU, 8 nhân GPU)' },
       { label: 'RAM',           value: '8 GB / 16 GB / 24 GB' },
