@@ -109,6 +109,7 @@ img { max-width: 100%; }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass { background: #21171A; }
   :root[data-theme='light'] .glass { background: #FFFFFF; }
+:root[data-theme='light'] .customer-header { background: rgba(240, 230, 233, 0.90); }
 }
 .btn {
   display: inline-flex;
@@ -198,6 +199,7 @@ select option { background: var(--surface); color: var(--fg); }
   gap: 16px;
   padding: 8px 12px 8px 22px;
   border-radius: 999px;
+  background: rgba(22, 9, 13, 0.85);
 }
 .brand { flex: 0 0 auto; color: var(--fg); font-size: 14px; font-weight: 800; letter-spacing: 3px; text-decoration: none; white-space: nowrap; }
 .customer-nav { display: flex; flex: 1 1 auto; min-width: 0; align-items: center; justify-content: center; gap: 12px; }
@@ -341,8 +343,8 @@ select option { background: var(--surface); color: var(--fg); }
 .product-card-image img { width: 85%; height: 85%; object-fit: contain; }
 .product-card-category { display: block; margin: 13px 5px 5px; color: var(--acc2); font-size: 11px; font-weight: 600; }
 .product-card-name { display: -webkit-box; min-height: 42px; margin: 0 5px; overflow: hidden; color: var(--fg); font-size: 14px; font-weight: 700; line-height: 1.5; text-decoration: none; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
-.product-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 10px 5px 3px; }
-.product-card-footer .product-price { font-size: 15px; }
+.product-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 8px 5px 3px; }
+.product-card-footer .product-price, .product-card-footer > .product-price { font-size: 15px; }
 .product-footer .chip { font-size: 10px; }
 .product-card-footer .chip { font-size: 10px; }
 .hot-products .product-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
@@ -350,7 +352,7 @@ select option { background: var(--surface); color: var(--fg); }
 .hot-products .product-card-image { grid-row: span 3; aspect-ratio: 1; }
 .hot-products .product-card-category, .hot-products .product-card-name { grid-column: 2; }
 .hot-products .product-card-footer { grid-column: 2; flex-wrap: wrap; }
-.new-products .product-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.new-products .product-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .empty-state, .error-state { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; margin: 12px 0; padding: 34px 22px; border-radius: 26px; text-align: center; }
 .empty-state h3, .error-state h3 { margin: 0; color: var(--fg); font-size: 17px; }
 .empty-state p, .error-state p { max-width: 420px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
@@ -575,10 +577,11 @@ select option { background: var(--surface); color: var(--fg); }
 
 /* hot-products: visual wrapper takes the grid-row span */
 .hot-products .product-card { position: relative; }
-.hot-products .product-card-visual { grid-row: span 3; aspect-ratio: 1; }
+.hot-products .product-card-visual { grid-row: 1 / -1; aspect-ratio: 1; }
 .hot-products .product-card-image { width: 100%; height: 100%; }
 .hot-products .product-card-category,
-.hot-products .product-card-name { grid-column: 2; }
+.hot-products .product-card-name,
+.hot-products .product-sold { grid-column: 2; }
 .hot-products .product-card-footer { grid-column: 2; }
 
 /* Product rank badge */
@@ -849,6 +852,16 @@ select option { background: var(--surface); color: var(--fg); }
 .hot-heading { align-items: center; }
 .hot-products { margin-bottom: 0; }
 
+/* Footer copyright */
+.footer-copyright {
+  margin: 28px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--brd);
+  color: var(--muted);
+  font-size: 11px;
+  text-align: center;
+}
+
 /* section-link spacing fix for "Xem tất cả" */
 .section-link {
   display: inline-flex;
@@ -867,6 +880,7 @@ select option { background: var(--surface); color: var(--fg); }
   .product-details { grid-template-columns: 1fr; }
   .detail-tab-nav { overflow-x: auto; gap: 2px; padding-bottom: 0; }
   .detail-tab-btn { white-space: nowrap; }
+  .new-products .product-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 560px) {
   .details-image-main { border-radius: 16px; }

@@ -97,11 +97,9 @@ function ProductCard({ product, index = 0, rank, sold, featured = false, animate
         Apple&nbsp;·&nbsp;{product.category?.name || 'Sản phẩm'}
       </span>
       <Link className="product-card-name" to={`/product/${product._id}`}>{product.name || ''}</Link>
+      {sold !== undefined && <span className="product-sold">Đã bán {soldCount}</span>}
       <div className="product-card-footer">
-        <div>
-          <span className="product-price">{formatMoney(product.price)}</span>
-          {sold !== undefined && <span className="product-sold">Đã bán {soldCount}</span>}
-        </div>
+        <span className="product-price">{formatMoney(product.price)}</span>
         <button
           type="button"
           className={`iconbtn quick-add${added ? ' is-added' : ''}`}

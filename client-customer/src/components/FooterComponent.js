@@ -27,6 +27,7 @@ function Footer() {
           <Link to="/myprofile">Hồ sơ</Link>
         </nav>
       </div>
+      <p className="footer-copyright">© 2026 EMPTY SHOP. Mọi quyền được bảo lưu.</p>
     </footer>
   );
 }
