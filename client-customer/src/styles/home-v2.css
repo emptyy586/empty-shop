@@ -504,6 +504,29 @@
   font-weight: 700;
 }
 
+/* Specs table in tab */
+.hv2.hv2-detail .specs-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hv2.hv2-detail .specs-table td {
+  padding: 12px 14px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  font-size: 13px;
+}
+
+.hv2.hv2-detail .specs-table tr:first-child td {
+  border-top: none;
+}
+
+.hv2.hv2-detail .specs-label {
+  color: var(--hv2-mu);
+  font-weight: 600;
+  white-space: nowrap;
+  width: 38%;
+}
+
 /* Related products: 3-col */
 .hv2.hv2-detail .related-products .product-list {
   grid-template-columns: repeat(3, 1fr);

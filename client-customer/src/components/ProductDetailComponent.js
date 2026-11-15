@@ -82,7 +82,8 @@ class ProductDetail extends Component {
         wishlisted = JSON.parse(localStorage.getItem('wishlist') || '[]').includes(String(product._id));
       } catch {}
 
-      this.setState({ product, soldCount, wishlisted, loading: false });
+      const defaultTab = product.specs?.length ? 'specs' : 'warranty';
+      this.setState({ product, soldCount, wishlisted, loading: false, activeTab: defaultTab });
 
       if (product.category?._id) {
         try {
@@ -156,7 +157,7 @@ class ProductDetail extends Component {
     if (error)   return <main className="customer-content hv2 hv2-detail"><ErrorState message={error} onRetry={() => this.apiGetProduct()} /></main>;
     if (!product) return <main className="customer-content hv2 hv2-detail"><ErrorState message="Không tìm thấy sản phẩm." onRetry={() => this.apiGetProduct()} /></main>;
 
-    const tabs = ['warranty', 'return', 'shipping', ...(product.specs?.length ? ['specs'] : [])];
+    const tabs = [...(product.specs?.length ? ['specs'] : []), 'warranty', 'return', 'shipping'];
 
     return (
       <main className="customer-content hv2 hv2-detail">
