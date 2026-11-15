@@ -174,7 +174,7 @@ class ProductDetail extends Component {
         </nav>
 
         {/* Main 2-col card */}
-        <div className="product-details glass">
+        <div className="product-details">
 
           {/* Left: image */}
           <div className="details-image">

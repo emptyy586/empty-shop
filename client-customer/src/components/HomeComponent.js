@@ -87,7 +87,6 @@ class Home extends Component {
               </div>
             </div>
             <div className="spotlight-visual">
-              <div className="spotlight-orbit" />
               <Link
                 className="spotlight-image-link"
                 to={'/product/' + featured._id}
