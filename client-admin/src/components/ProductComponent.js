@@ -14,7 +14,7 @@ class ProductComponent extends Component {
   static contextType = MyContext;
 
   state = {
-    products: [], curPage: 1, itemSelected: null, formKey: 0,
+    products: [], soldMap: {}, curPage: 1, itemSelected: null, formKey: 0,
     loading: true, error: '', search: '', filterCat: '',
     confirmDeleteItem: null, deleting: false,
   };
@@ -27,7 +27,10 @@ class ProductComponent extends Component {
     this.setState({ loading: true, error: '' });
     try {
       const config = { headers: { 'x-access-token': this.context.token } };
-      const firstPage = await axios.get('/api/admin/products', { ...config, params: { page: 1 } });
+      const [firstPage, ordersRes] = await Promise.all([
+        axios.get('/api/admin/products', { ...config, params: { page: 1 } }),
+        axios.get('/api/admin/orders', config),
+      ]);
       if (firstPage.data?.success === false || !Array.isArray(firstPage.data?.products)) {
         throw new Error(firstPage.data?.message || 'Không thể tải sản phẩm.');
       }
@@ -44,8 +47,22 @@ class ProductComponent extends Component {
         ...firstPage.data.products,
         ...remaining.flatMap(r => r.data.products),
       ];
+
+      // Tính sold từ APPROVED orders (cùng nguồn với trang Tổng quan)
+      const soldMap = {};
+      if (Array.isArray(ordersRes.data)) {
+        ordersRes.data
+          .filter(o => o.status === 'APPROVED')
+          .forEach(o => {
+            (o.items || []).forEach(item => {
+              const id = String(item.product?._id || item.product || '');
+              if (id) soldMap[id] = (soldMap[id] || 0) + (Number(item.quantity) || 1);
+            });
+          });
+      }
+
       const pageCount = Math.ceil(products.length / PAGE_SIZE);
-      this.setState({ products, curPage: Math.min(page, Math.max(pageCount, 1)), loading: false });
+      this.setState({ products, soldMap, curPage: Math.min(page, Math.max(pageCount, 1)), loading: false });
     } catch (error) {
       this.setState({
         error: error.response?.data?.message || error.message || 'Không thể tải sản phẩm.',
@@ -85,7 +102,7 @@ class ProductComponent extends Component {
   };
 
   render() {
-    const { products, curPage, itemSelected, formKey, loading, error, search, filterCat, confirmDeleteItem } = this.state;
+    const { products, soldMap, curPage, itemSelected, formKey, loading, error, search, filterCat, confirmDeleteItem } = this.state;
 
     // Unique categories from loaded products
     const categories = [...new Map(
@@ -173,7 +190,7 @@ class ProductComponent extends Component {
                         </td>
                         <td>{item.category?.name || '—'}</td>
                         <td style={{ fontWeight: 600 }}>{formatMoney(item.price)}</td>
-                        <td style={{ color: 'var(--av2-mu, #6b5b61)' }}>{item.sold ?? '—'}</td>
+                        <td style={{ color: 'var(--av2-mu, #6b5b61)' }}>{soldMap[String(item._id)] ?? 0}</td>
                         <td>
                           <button type="button" className="av2-action-btn av2-action-edit"
                             onClick={() => this.setState({ itemSelected: item })}>Sửa</button>

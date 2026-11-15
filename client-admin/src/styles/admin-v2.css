@@ -508,42 +508,44 @@
   background: #F6F2F3;
 }
 .av2-login-card {
-  width: 420px;
+  width: 520px;
+  max-width: 90%;
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 1px 3px rgba(22,9,13,.08);
-  padding: 40px;
+  padding: 52px;
 }
-.av2-login-card-hd h2 { font-size: 26px; font-weight: 700; color: #16090D; margin: 0; }
-.av2-login-card-hd p  { color: #6b5b61; font-size: 14px; margin-top: 6px; }
+.av2-login-card-hd h2 { font-size: 32px; font-weight: 700; color: #16090D; margin: 0; }
+.av2-login-card-hd p  { color: #6b5b61; font-size: 16px; margin-top: 8px; }
 
 .av2-login-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 20px;
+  gap: 24px;
+  margin-top: 24px;
 }
 .av2-login-form label {
   display: block;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   color: #16090D;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .av2-login-form input,
 .av2-login-card .password-input-control {
   width: 100% !important;
-  padding: 13px 16px !important;
+  padding: 16px 18px !important;
   border: 1px solid #e3d0d6 !important;
-  border-radius: 12px !important;
-  font-size: 14px !important;
+  border-radius: 14px !important;
+  font-size: 16px !important;
   color: #16090D !important;
   background: #fff !important;
-  min-height: unset !important;
+  min-height: 54px !important;
+  height: 54px;
   outline: none;
 }
 .av2-login-card .password-input-control {
-  padding-right: 56px !important;
+  padding-right: 60px !important;
 }
 .av2-login-form input:focus,
 .av2-login-card .password-input-control:focus {
@@ -556,9 +558,10 @@
 .av2-login-submit {
   width: 100%;
   justify-content: center;
-  padding: 14px !important;
-  border-radius: 12px !important;
-  font-size: 15px !important;
+  height: 56px;
+  padding: 0 24px !important;
+  border-radius: 14px !important;
+  font-size: 17px !important;
   font-weight: 700 !important;
   background: #A91F4A !important;
   border-color: #A91F4A !important;
@@ -572,7 +575,7 @@
 @media (max-width: 860px) {
   .av2-login-left { display: none; }
   .av2-login-right { min-height: 100vh; }
-  .av2-login-card { width: min(100%, 420px); padding: 32px 24px; }
+  .av2-login-card { width: min(90%, 520px); padding: 32px 28px; max-width: none; }
 
   .av2-mobile-header { display: flex; }
 
