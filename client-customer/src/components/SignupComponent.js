@@ -74,15 +74,10 @@ class Signup extends Component {
         email: txtEmail.trim(),
       });
       if (result.data?.success === true) {
-        let message, autoActivated = false;
-        if (result.data?.activated) {
-          message = 'Đăng ký thành công, bạn có thể đăng nhập.';
-          autoActivated = true;
-        } else if (/console/i.test(result.data.message || '')) {
-          message = 'Tài khoản đã được tạo. Hãy lấy liên kết kích hoạt trong console của server đang chạy.';
-        } else {
-          message = 'Vui lòng kiểm tra email để kích hoạt tài khoản trước khi đăng nhập.';
-        }
+        const autoActivated = Boolean(result.data?.activated);
+        const message = autoActivated
+          ? 'Đăng ký thành công, bạn có thể đăng nhập.'
+          : 'Vui lòng kiểm tra email để kích hoạt tài khoản trước khi đăng nhập.';
         this.setState({ success: true, successMessage: message, autoActivated, loading: false });
       } else {
         this.showSignupError(result.data?.message || '');
