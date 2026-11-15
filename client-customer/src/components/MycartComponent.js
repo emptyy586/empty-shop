@@ -120,7 +120,7 @@ class Mycart extends Component {
             <div className="table-scroll"><table className="datatable">
               <thead>
                 <tr>
-                  <th>#</th><th>Mã</th><th>Sản phẩm</th><th>Danh mục</th><th>Ảnh</th>
+                  <th>#</th><th className="cart-id-col">Mã</th><th>Sản phẩm</th><th>Danh mục</th><th>Ảnh</th>
                   <th>Đơn giá</th><th>Số lượng</th><th>Thành tiền</th><th>Thao tác</th>
                 </tr>
               </thead>
@@ -128,7 +128,7 @@ class Mycart extends Component {
                 {cartItems.map((item, index) => item?.product && (
                   <tr key={item.product._id}>
                     <td>{index + 1}</td>
-                    <td>{item.product._id}</td>
+                    <td className="cart-id-col">{item.product._id}</td>
                     <td>{item.product.name}</td>
                     <td>{item.product.category?.name}</td>
                     <td>
@@ -169,6 +169,7 @@ class Mycart extends Component {
                     <td>
                       <button
                         type="button"
+                        className="cart-remove-btn"
                         onClick={() => this.askRemove(item.product._id)}
                       >
                         Xóa
