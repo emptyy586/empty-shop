@@ -21,7 +21,7 @@ class MainComponent extends Component {
     }
 
     return (
-      <div className="body-admin">
+      <div className="body-admin av2">
         <MenuComponent />
         <RouteTransition><Routes>
           <Route path="/admin" element={<Navigate to="/admin/home" replace />} />

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import './styles/theme.css';
+import './styles/admin-v2.css';
 import './styles/motion.css';
 import LoginComponent from './components/LoginComponent';
 import MainComponent from './components/MainComponent';

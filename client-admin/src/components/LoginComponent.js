@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import MyContext from '../contexts/MyContext';
-import ThemeToggle from './ui/ThemeToggle';
 import PasswordInput from './ui/PasswordInput';
 
 class LoginComponent extends Component {
@@ -57,57 +56,70 @@ class LoginComponent extends Component {
 
   render() {
     const path = window.location.pathname.replace(/\/$/, '') || '/';
-    const loginPaths = ['/','/admin','/admin/home','/admin/category','/admin/product','/admin/order','/admin/customer'];
+    const loginPaths = ['/', '/admin', '/admin/home', '/admin/category', '/admin/product', '/admin/order', '/admin/customer'];
     if (this.context.token || !loginPaths.includes(path)) return null;
 
+    const { txtUsername, txtPassword, loading, error } = this.state;
+
     return (
-      <div className="body-admin admin-login align-valign-center">
-        <form className="admin-login-form glass" onSubmit={this.handleSubmit}>
-          <div className="admin-login-heading">
-            <div className="admin-login-theme"><ThemeToggle /></div>
-            <div className="eyebrow">BACK OFFICE</div>
-            <h1>EMPTY SHOP</h1>
+      <div className="av2-login">
+
+        {/* Left — branding panel */}
+        <div className="av2-login-left">
+          <div className="av2-login-brand">
+            <b>EMPTY SHOP</b>
+            <p>ADMIN</p>
           </div>
-          <table>
-            <tbody>
-              <tr>
-                <td><label htmlFor="admin-username">Tên đăng nhập</label></td>
-                <td>
-                  <input
-                    id="admin-username"
-                    value={this.state.txtUsername}
-                    autoComplete="username"
-                    disabled={this.state.loading}
-                    onChange={(event) => this.setState({ txtUsername: event.target.value, error: '' })}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td><label htmlFor="admin-password">Mật khẩu</label></td>
-                <td>
-                  <PasswordInput
-                    id="admin-password"
-                    name="password"
-                    value={this.state.txtPassword}
-                    autoComplete="current-password"
-                    required
-                    disabled={this.state.loading}
-                    onChange={(event) => this.setState({ txtPassword: event.target.value, error: '' })}
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td />
-                <td>
-                  {this.state.error && <p className="field-error" role="alert">{this.state.error}</p>}
-                  <button className="btn btn-primary auth-submit" type="submit" disabled={this.state.loading} aria-busy={this.state.loading}>
-                    {this.state.loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </form>
+          <div className="av2-login-headline">
+            <h1>Quản lý cửa hàng<br />gọn gàng, rõ ràng</h1>
+            <p>Sản phẩm, danh mục, khách hàng và đơn hàng trong một nơi.</p>
+          </div>
+          <p className="av2-login-copy">© 2026 EMPTY SHOP</p>
+        </div>
+
+        {/* Right — form card */}
+        <div className="av2-login-right">
+          <div className="av2-login-card">
+            <div className="av2-login-card-hd">
+              <h2>Đăng nhập quản trị</h2>
+              <p>Nhập tài khoản quản trị viên để tiếp tục.</p>
+            </div>
+            <form className="av2-login-form" onSubmit={this.handleSubmit} noValidate>
+              <div>
+                <label htmlFor="admin-username">Tên đăng nhập</label>
+                <input
+                  id="admin-username"
+                  type="text"
+                  autoComplete="username"
+                  value={txtUsername}
+                  disabled={loading}
+                  onChange={(e) => this.setState({ txtUsername: e.target.value, error: '' })}
+                />
+              </div>
+              <div>
+                <label htmlFor="admin-password">Mật khẩu</label>
+                <PasswordInput
+                  id="admin-password"
+                  name="password"
+                  value={txtPassword}
+                  autoComplete="current-password"
+                  required
+                  disabled={loading}
+                  onChange={(e) => this.setState({ txtPassword: e.target.value, error: '' })}
+                />
+              </div>
+              {error && <p className="field-error" role="alert">{error}</p>}
+              <button
+                className="btn btn-primary av2-login-submit"
+                type="submit"
+                disabled={loading}
+                aria-busy={loading}
+              >
+                {loading ? 'Đang đăng nhập...' : 'Đăng nhập'}
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
