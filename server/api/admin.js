@@ -176,6 +176,7 @@ router.post('/products', JwtUtil.checkToken, async (req, res) => {
       cdate: Date.now(),
       category,
     };
+    if (Array.isArray(req.body.specs)) product.specs = req.body.specs;
     const result = await ProductDAO.insert(product);
     return res.json(result);
   } catch (error) {
@@ -194,6 +195,7 @@ router.put('/products/:id', JwtUtil.checkToken, async (req, res) => {
       image: req.body.image,
       category,
     };
+    if (Array.isArray(req.body.specs)) product.specs = req.body.specs;
     const result = await ProductDAO.update(product);
     return res.json(result);
   } catch (error) {

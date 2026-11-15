@@ -110,12 +110,10 @@ const selectByKeyword = (keyword) =>
   Models.Product.find({ name: { $regex: new RegExp(keyword, 'i') } }).exec();
 
 const update = (product) => {
-  const { _id, name, price, image, category } = product;
-  return Models.Product.findByIdAndUpdate(
-    _id,
-    { name, price, image, category },
-    { new: true }
-  ).exec();
+  const { _id, name, price, image, category, specs } = product;
+  const fields = { name, price, image, category };
+  if (specs !== undefined) fields.specs = specs;
+  return Models.Product.findByIdAndUpdate(_id, fields, { new: true }).exec();
 };
 
 const deleteById = (_id) => Models.Product.findByIdAndDelete(_id).exec();

@@ -81,6 +81,11 @@ const CategoryModelSchema = new mongoose.Schema(
   { versionKey: false }
 );
 
+const SpecItemSchema = new mongoose.Schema(
+  { label: String, value: String },
+  { _id: false, versionKey: false }
+);
+
 const ProductSchema = new mongoose.Schema(
   {
     name: String,
@@ -88,6 +93,7 @@ const ProductSchema = new mongoose.Schema(
     image: String,
     cdate: Number,
     category: Object,
+    specs: { type: [SpecItemSchema], default: undefined },
   },
   { versionKey: false }
 );
