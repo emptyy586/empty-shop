@@ -190,7 +190,13 @@ select option { background: var(--surface); color: var(--fg); }
 
 /* Customer shell and navigation */
 .body-customer { min-height: 100vh; background: transparent; color: var(--fg); }
-.customer-header-wrap { position: sticky; z-index: 20; top: 10px; padding: 12px var(--page-pad) 0; }
+.customer-header-wrap {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  padding: 12px var(--page-pad) 8px;
+  background: linear-gradient(to bottom, #0b0507 72%, transparent);
+}
 .customer-header {
   position: relative;
   display: flex;
