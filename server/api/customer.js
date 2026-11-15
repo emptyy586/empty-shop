@@ -52,8 +52,10 @@ router.post('/signup', async (req, res) => {
     return res.status(400).json({ success: false, message: 'Password must be at least 6 characters' });
   }
 
-  // Bỏ qua email nếu chưa cấu hình hoặc SKIP_EMAIL_ACTIVATION=true
-  const skipEmail = process.env.SKIP_EMAIL_ACTIVATION === 'true' || !EmailUtil.isConfigured();
+  const isProduction = process.env.NODE_ENV === 'production';
+  const emailConfigured = EmailUtil.isConfigured();
+  // a) SKIP: biến môi trường bật, hoặc production mà chưa có email (tránh 503 trên Render)
+  const skipActivation = process.env.SKIP_EMAIL_ACTIVATION === 'true' || (isProduction && !emailConfigured);
 
   try {
     const [existingUsername, existingEmail] = await Promise.all([
@@ -80,8 +82,8 @@ router.post('/signup', async (req, res) => {
       name,
       phone: phone || '',
       email,
-      active: skipEmail ? 1 : 0,
-      token,
+      active: skipActivation ? 1 : 0,
+      token, // luôn lưu token vào DB dù không gửi mail
     };
     let result;
     try {
@@ -103,20 +105,30 @@ router.post('/signup', async (req, res) => {
       return res.status(500).json({ success: false, message: 'Could not create customer record' });
     }
 
-    if (skipEmail) {
+    // a) SKIP — tự kích hoạt ngay, không gửi mail, không in console
+    if (skipActivation) {
       return res.json({ success: true, activated: true, message: 'Account created and activated' });
     }
 
-    try {
-      await EmailUtil.send(email, result._id, token);
-      return res.json({ success: true, message: 'Please check email' });
-    } catch (error) {
-      logSignupError('Activation email delivery failed', error);
-      return res.status(502).json({
-        success: false,
-        message: 'Không gửi được email kích hoạt',
-      });
+    // b) EMAIL — có cấu hình email, gửi mail kích hoạt
+    if (emailConfigured) {
+      try {
+        await EmailUtil.send(email, result._id, token);
+        return res.json({ success: true, message: 'Please check email' });
+      } catch (error) {
+        logSignupError('Activation email delivery failed', error);
+        return res.status(502).json({
+          success: false,
+          message: 'Không gửi được email kích hoạt',
+        });
+      }
     }
+
+    // c) DEV — dev, chưa có email, không bật SKIP: in link/mã kích hoạt ra console
+    console.log('[signup] Activation URL:', EmailUtil.activationUrl(result._id, token));
+    console.log('[signup] Customer ID:', String(result._id));
+    console.log('[signup] Token:', token);
+    return res.json({ success: true, message: 'Please check the server console for the activation link' });
   } catch (error) {
     logSignupError('Signup request failed', error);
     return res.status(500).json({ success: false, message: 'Could not process signup request' });
