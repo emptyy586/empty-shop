@@ -293,7 +293,15 @@ select option { background: var(--surface); color: var(--fg); }
 .datatable tr:last-child td, .body-admin .table-bordered tr:last-child td { border-bottom: 0; }
 .datatable img { width: 70px; height: 70px; border-radius: 12px; object-fit: contain; }
 /* Checkout shipping form modal */
-.checkout-modal { width: min(100%, 520px); padding: 28px 32px; border-radius: 28px; }
+.checkout-backdrop { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); background: rgba(0,0,0,.72); }
+.checkout-modal {
+  width: min(100%, 520px); padding: 28px 32px; border-radius: 28px;
+  background: var(--surface) !important;      /* nền đặc, không trong suốt */
+  border: 1px solid var(--brd);
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: 0 24px 60px -12px rgba(0,0,0,.7);
+}
 .checkout-modal h3 { margin: 0 0 4px; color: var(--fg); font-size: 20px; }
 .checkout-modal-total { margin: 0 0 18px; color: var(--muted); font-size: 14px; }
 .checkout-modal-total strong { color: var(--acc2); }

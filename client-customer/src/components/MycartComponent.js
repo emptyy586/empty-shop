@@ -260,7 +260,7 @@ class Mycart extends Component {
 
         {/* Checkout form modal */}
         {showCheckoutForm && (
-          <div className="confirm-backdrop"
+          <div className="confirm-backdrop checkout-backdrop"
             onClick={(e) => e.target === e.currentTarget && !checkingOut && this.cancelCheckout()}
             role="presentation">
             <div className="checkout-modal glass" role="dialog" aria-modal="true"

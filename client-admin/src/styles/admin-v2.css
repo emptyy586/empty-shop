@@ -20,6 +20,23 @@
   color: var(--av2-txt);
 }
 
+/* Tiêu đề: ghi đè --fg trắng từ dark-mode theme.css → luôn hiện chữ tối */
+.body-admin.av2 h1,
+.body-admin.av2 h2,
+.body-admin.av2 h3 { color: var(--av2-txt) !important; }
+
+/* btn-glass: chữ tối + viền nhạt trên nền sáng; giữ white trong sidebar */
+.body-admin.av2 .admin-page .btn-glass,
+.body-admin.av2 .admin-panels .btn-glass {
+  color: var(--av2-txt) !important;
+  border-color: var(--av2-brd) !important;
+  background: rgba(169,31,74,.06) !important;
+}
+.body-admin.av2 .admin-page .btn-glass:hover:not(:disabled),
+.body-admin.av2 .admin-panels .btn-glass:hover:not(:disabled) {
+  background: rgba(169,31,74,.12) !important;
+}
+
 .body-admin.av2 > .admin-page,
 .body-admin.av2 > .admin-panels {
   padding: 30px 36px;
