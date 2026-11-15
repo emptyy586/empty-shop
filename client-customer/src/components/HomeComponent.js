@@ -47,7 +47,7 @@ class Home extends Component {
     try {
       const [newResult, hotResult] = await Promise.all([
         axios.get('/api/customer/products', { params: { sort: 'newest', limit: 5 } }),
-        axios.get('/api/customer/products/hot', { params: { limit: 22 } }),
+        axios.get('/api/customer/products/hot', { params: { limit: 12 } }),
       ]);
       const rawNew = Array.isArray(newResult.data?.products) ? newResult.data.products : [];
       const hotprods = Array.isArray(hotResult.data) ? hotResult.data : [];
